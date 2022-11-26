@@ -1,0 +1,21 @@
+name: LaTeX build and release
+on:
+  workflow_call:
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode --shell-escape
+      - name: Rename file
+        run: mv main.pdf "${{ github.event.repository.name }}_${{ github.ref_name }}.pdf"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.event.repository.name }}_${{ github.ref_name }}.pdf
