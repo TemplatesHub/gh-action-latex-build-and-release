@@ -23,8 +23,8 @@ jobs:
           root_file: ${{ github.event.inputs.tex-entrypoint }}.tex
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode --shell-escape
       - name: Rename file
-        run: mv ${{ github.event.inputs.tex-entrypoint }}.pdf "${{ github.event.inputs.pdf-name }}_${{ github.ref_name }}.pdf"
+        run: mv ${{ github.event.inputs.tex-entrypoint }}.pdf "${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf"
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.event.inputs.pdf-name }}_${{ github.ref_name }}.pdf
+          files: ${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf
