@@ -18,8 +18,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: "LaTeX build and release"
-      uses: TemplatesHub/gh-action-latex-build-and-release/.github/workflows/latex-build-and-release.yml@main
-      with:
-          tex-entry-point: '${{ github.event.inputs.tex-entry-point }}'
-          pdf-name: '${{ github.event.inputs.pdf-name }}'
+      - name: "LaTeX build and release"
+        uses: TemplatesHub/gh-action-latex-build-and-release/.github/workflows/latex-build-and-release.yml@main
+        with:
+            tex-entry-point: '${{ github.event.inputs.tex-entry-point }}'
+            pdf-name: '${{ github.event.inputs.pdf-name }}'
