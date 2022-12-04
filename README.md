@@ -46,7 +46,7 @@ All the inputs in this action are optional.
 | pdf-name        | string | ${{ github.event.repository.name }} | PDF file name (without extension)                         |
 
 ## Final PDF result
-After the action has completed its execution successfuly, you will find the PDF as asset in your latest release. The file name will be:  
+After the action has completed its execution successfully, you will find the PDF as asset in your latest release. The file name will be:  
 ```console
 <pdf-name><white space><latest tag>.pdf
 ```
