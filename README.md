@@ -50,4 +50,4 @@ After the action has completed its execution successfuly, you will find the PDF 
 ```console
 <pdf-name><white space><latest tag>.pdf
 ```
-Ex: __"My pdf document v1.0.0.pdf"__
+Example: __"My pdf document v1.0.0.pdf"__
