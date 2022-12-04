@@ -1,6 +1,17 @@
 name: LaTeX build and release
 on:
   workflow_call:
+    inputs:
+      tex-entrypoint:
+        description: 'Entrypoint .tex file'
+        type: string
+        required: false
+        default: 'main'
+      pdf-name:
+        description: 'Final PDF file name'
+        type: string
+        required: false
+        default: '${{ github.event.repository.name }}'
 
 jobs:
   build_and_release:
@@ -11,11 +22,11 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: ${{ github.event.inputs.tex-entrypoint }}.tex
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode --shell-escape
       - name: Rename file
-        run: mv main.pdf "${{ github.event.repository.name }}_${{ github.ref_name }}.pdf"
+        run: mv ${{ github.event.inputs.tex-entrypoint }}.pdf "${{ github.event.inputs.pdf-name }}_${{ github.ref_name }}.pdf"
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.event.repository.name }}_${{ github.ref_name }}.pdf
+          files: ${{ github.event.inputs.pdf-name }}_${{ github.ref_name }}.pdf
