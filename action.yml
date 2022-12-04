@@ -1,0 +1,25 @@
+name: latex-build-and-release
+description: Builds a PDF file from LaTeX source and publishes it as asset in a release.
+author: TemplatesHub
+branding: 
+  icon: 'file-text'
+  color: 'green'
+inputs:
+  tex-entrypoint:
+    description: 'Entrypoint .tex file'
+    type: string
+    required: false
+    default: 'main'
+  pdf-name:
+    description: 'Final PDF file name'
+    type: string
+    required: false
+    default: '${{ github.event.repository.name }}'
+runs:
+  using: 'composite'
+  steps:
+    - name: "LaTeX build and release"
+      uses: ./github/workflows/latex-build-and-release.yml
+      with:
+          tex-entrypoint: '${{ github.event.inputs.tex-entrypoint }}'
+          pdf-name: '${{ github.event.inputs.pdf-name }}'

@@ -5,13 +5,11 @@ on:
       tex-entrypoint:
         description: 'Entrypoint .tex file'
         type: string
-        required: false
-        default: 'main'
+        required: true
       pdf-name:
         description: 'Final PDF file name'
         type: string
-        required: false
-        default: '${{ github.event.repository.name }}'
+        required: true
 
 jobs:
   build_and_release:
