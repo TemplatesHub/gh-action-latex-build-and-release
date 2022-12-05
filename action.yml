@@ -17,9 +17,14 @@ inputs:
     default: '${{ github.event.repository.name }}'
 runs:
   using: 'composite'
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   steps:
-      - name: "LaTeX build and release"
-        uses: TemplatesHub/gh-action-latex-build-and-release/.github/workflows/latex-build-and-release.yml@main
-        with:
-            tex-entry-point: '${{ github.event.inputs.tex-entry-point }}'
-            pdf-name: '${{ github.event.inputs.pdf-name }}'
+    - name: "Install texlive"
+      run: sudo apt-get -y install texlive-full
+    - name: "Build PDF file"
+      run: pdflatex ${{ github.event.inputs.tex-entry-point }}.tex
+    - name: "Rename PDF file"
+      run: mv ${{ github.event.inputs.tex-entry-point }}.pdf "${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+    - name: "Upload PDF as artifact in release"
+      run: gh release upload ${{ github.ref_name }} "${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf"
