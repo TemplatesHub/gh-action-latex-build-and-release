@@ -1,7 +1,7 @@
 # LaTeX build and release
 ![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)   
-This actions compiles a PDF document starting from LaTeX source code and creates a release (using the latest tag of the repository), attaching the PDF document as asset.
+This actions compiles a PDF document starting from LaTeX source code and attaches the PDF document as asset in a release.
 
 ## Table of contents
 - [Usage example](#usage-example)
@@ -9,13 +9,12 @@ This actions compiles a PDF document starting from LaTeX source code and creates
 - [Final PDF result](#final-pdf-result)
 
 ## Usage example
-This example is executed every time a new tag is pushed, resulting the creation of a new release (with said tag) containing the compiled PDF document as asset.
+This example is executed every time a new release is created, resulting in the compilation of PDF document, starting from the repository's LaTeX source code, which is then uploaded as asset in said release.
 ```yaml
 name: LaTeX document CD
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  release:
+    types: [created]
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -26,28 +25,23 @@ jobs:
         uses: TemplatesHub/gh-action-latex-build-and-release@v1
         with:
           tex-entry-point: 'main'
-          pdf-name: 'My pdf document'
+          pdf-name: 'My_pdf_document'
 ```
-To trigger the execution, you will need to run, in order, the following commands:
-```console
-git tag -a v<VERSION> -m "<RELEASE NOTES>"
-```
-```console
-git push origin --tags
-```
-Despite this example uses the "tag push" trigger, <ins>you can use this action in other ways, just keep in mind that the latest tag available will be used to trigger a release</ins>.
 
 ## Optional inputs
 All the inputs in this action are optional.
 
-| Input           | Type   | Default                             | Description                                               |
-|-----------------|--------|-------------------------------------|-----------------------------------------------------------|
-| tex-entry-point | string | main                                | Entry point .tex file for compilation (without extension) |
-| pdf-name        | string | ${{ github.event.repository.name }} | PDF file name (without extension)                         |
+| Input           | Type   | Default                           | Description                                                                      |
+|-----------------|--------|-----------------------------------|----------------------------------------------------------------------------------|
+| tex-entry-point | string | main                              | Entry point .tex file used to create the PDF (do not include the file extension) |
+| pdf-name        | string | ${{github.event.repository.name}} | Final PDF file name (do not include the file extension)                          |
+| gh-token        | string | ${{github.token}}                 | Token used to upload the PDF to the release                                      |
 
 ## Final PDF result
 After the action has completed its execution successfully, you will find the PDF as asset in your latest release. The file name will be:  
 ```console
-<pdf-name><white space><latest tag>.pdf
+<pdf-name>-<latest tag>.pdf
 ```
-Example: __"My pdf document v1.0.0.pdf"__
+Example (using tag v1.0.0 in the release): __"My_pdf_document-v1.0.0.pdf"__  
+
+Please note that, unfortunately, __the white spaces in the PDF file name will be replaced with dots automatically by GitHub__.
