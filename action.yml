@@ -17,8 +17,6 @@ inputs:
     default: '${{ github.event.repository.name }}'
 runs:
   using: 'composite'
-  env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   steps:
     - name: "Install texlive"
       run: sudo apt-get -y install texlive-full
