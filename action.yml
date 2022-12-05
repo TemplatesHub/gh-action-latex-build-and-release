@@ -5,6 +5,10 @@ branding:
   icon: 'file-text'
   color: 'green'
 inputs:
+  gh-token:
+    description: "GitHub token"
+    type: string
+    required: true
   tex-entry-point:
     description: 'Entry point .tex file'
     type: string
@@ -30,5 +34,5 @@ runs:
     - name: "Upload PDF as artifact in release"
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ inputs.gh-token }}
       run: gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
