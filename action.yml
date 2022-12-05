@@ -23,10 +23,10 @@ runs:
       run: sudo apt-get -y install texlive-full
     - name: "Build PDF file"
       shell: bash
-      run: pdflatex ${{ github.event.inputs.tex-entry-point }}.tex
+      run: pdflatex ${{ inputs.tex-entry-point }}.tex
     - name: "Rename PDF file"
       shell: bash
-      run: mv ${{ github.event.inputs.tex-entry-point }}.pdf "${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+      run: mv ${{ inputs.tex-entry-point }}.pdf "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
     - name: "Upload PDF as artifact in release"
       shell: bash
-      run: gh release upload ${{ github.ref_name }} "${{ github.event.inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+      run: gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
