@@ -29,4 +29,6 @@ runs:
       run: mv ${{ inputs.tex-entry-point }}.pdf "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
     - name: "Upload PDF as artifact in release"
       shell: bash
-      run: export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}" && gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
