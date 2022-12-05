@@ -31,9 +31,9 @@ runs:
       run: pdflatex ${{ inputs.tex-entry-point }}.tex
     - name: "Rename PDF file"
       shell: bash
-      run: mv ${{ inputs.tex-entry-point }}.pdf "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+      run: mv ${{ inputs.tex-entry-point }}.pdf "${{ inputs.pdf-name }}-${{ github.ref_name }}.pdf"
     - name: "Upload PDF as artifact in release"
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.gh-token }}
-      run: gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }} ${{ github.ref_name }}.pdf"
+      run: gh release upload ${{ github.ref_name }} "${{ inputs.pdf-name }}-${{ github.ref_name }}.pdf"
