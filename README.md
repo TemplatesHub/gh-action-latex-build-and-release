@@ -22,7 +22,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Build and release LaTeX document
-        uses: TemplatesHub/gh-action-latex-build-and-release@v1
+        uses: TemplatesHub/gh-action-latex-build-and-release@v2
         with:
           tex-entry-point: 'main'
           pdf-name: 'My_pdf_document'
