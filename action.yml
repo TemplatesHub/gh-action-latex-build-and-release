@@ -26,7 +26,10 @@ runs:
     - name: "Install texlive"
       shell: bash
       run: sudo apt-get -y install texlive-full
-    - name: "Build PDF file"
+    - name: "First build PDF file"
+      shell: bash
+      run: pdflatex ${{ inputs.tex-entry-point }}.tex
+    - name: "Second build PDF file for TOC and Images"
       shell: bash
       run: pdflatex ${{ inputs.tex-entry-point }}.tex
     - name: "Rename PDF file"
