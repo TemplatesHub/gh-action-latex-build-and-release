@@ -23,6 +23,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: "Updating packages"
+      shell: bash
+      run: sudo apt-get update
     - name: "Install texlive"
       shell: bash
       run: sudo apt-get -y install texlive-full
